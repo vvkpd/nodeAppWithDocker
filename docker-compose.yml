@@ -7,6 +7,8 @@ services:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
+    volumes:
+      - database:/var/lib/postgresql/data
 
   web:
     image: samaj-web
@@ -18,3 +20,5 @@ services:
       - Database
     depends_on:
       - Database
+volumes:
+  database:
