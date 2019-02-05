@@ -1,16 +1,20 @@
 version: '3.7'
 services:
-  web:
-    build: ./web/
-    ports:
-    - "8000:8000"
-
   Database:
+    container_name: samaj_database
     image: postgres:10.2-alpine
-    ports:
-    - 5432:5432
     environment:
-    - POSTGRES_DB=postgres
-    - POSTGRES_USER=postgres
-    - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
 
+  web:
+    image: samaj-web
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@samaj_database:5432/postgres
+    links:
+      - Database
+    depends_on:
+      - Database
