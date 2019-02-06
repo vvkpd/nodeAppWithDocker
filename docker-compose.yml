@@ -20,5 +20,16 @@ services:
       - Database
     depends_on:
       - Database
+
+  web2:
+    image: samaj-web
+    ports:
+    - "8001:8000"
+    environment:
+    - DATABASE_URL=postgresql://postgres:password@samaj_database:5432/postgres
+    links:
+    - Database
+    depends_on:
+    - Database
 volumes:
   database:
