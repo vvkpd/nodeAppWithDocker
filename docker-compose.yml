@@ -10,10 +10,9 @@ services:
     volumes:
       - database:/var/lib/postgresql/data
 
-  web:
-    image: samaj-web
-    ports:
-      - "8000:8000"
+  web1:
+    build: ./web
+    image: samaj_web
     environment:
       - DATABASE_URL=postgresql://postgres:password@samaj_database:5432/postgres
     links:
@@ -22,14 +21,21 @@ services:
       - Database
 
   web2:
-    image: samaj-web
-    ports:
-    - "8001:8000"
+    build: ./web
+    image: samaj_web
     environment:
     - DATABASE_URL=postgresql://postgres:password@samaj_database:5432/postgres
     links:
     - Database
     depends_on:
     - Database
+
+  Proxy:
+    build: ./proxy
+    image: samaj_proxy
+    ports:
+    - "5000:5000"
+    environment:
+    - WEB1_DNS=http://web1:8000
 volumes:
   database:
