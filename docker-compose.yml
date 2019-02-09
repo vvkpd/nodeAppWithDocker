@@ -36,6 +36,6 @@ services:
     ports:
     - "5000:5000"
     environment:
-    - WEB1_DNS=http://web1:8000
+    - WEB_DNS=http://web1:8000,http://web2:8000
 volumes:
   database:
